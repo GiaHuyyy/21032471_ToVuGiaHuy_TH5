@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView, Image, TextInput, FlatList, TouchableOpacity } from "react-native";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 const footer = [
   {
@@ -25,8 +26,12 @@ const Home = ({ route }) => {
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
 
-  const { username, avatar } = route.params;
+  // const { username, avatar } = route.params;
+  const { user, setUser } = useGlobalContext();
   const navigation = useNavigation();
+  // useEffect(() => {
+  //   setUser({ username: username });
+  // }, []);
 
   const isValidJSON = (text) => {
     try {
@@ -106,7 +111,7 @@ const Home = ({ route }) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image
-                source={{ uri: avatar }}
+                source={{ uri: user.avatar }}
                 style={{
                   width: 40,
                   height: 40,
@@ -118,7 +123,7 @@ const Home = ({ route }) => {
             </TouchableOpacity>
             <View style={{ marginLeft: 10 }}>
               <Text style={{ color: "#fff", fontSize: 16, fontWeight: 700 }}>Wellcome</Text>
-              <Text style={{ color: "#fff", fontSize: 12 }}>{username}</Text>
+              <Text style={{ color: "#fff", fontSize: 12 }}>{user.username}</Text>
             </View>
 
             <Image
